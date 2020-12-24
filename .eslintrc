@@ -13,7 +13,8 @@
     "require-jsdoc": "off",
     "comma-dangle": "off",
     "max-len": ["error", 130],
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-extend-native": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }

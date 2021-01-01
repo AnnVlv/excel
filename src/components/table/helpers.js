@@ -1,8 +1,10 @@
-import {range} from '@core/utils'
+import {range} from '@core'
+import {ELEMENT_TYPES, KEYS} from '@/components/table/types'
+
 
 export const shouldResize = event => !!event.target.dataset.resize
 
-export const shouldSelect = event => event.target.dataset.type === 'cell'
+export const shouldSelect = event => event.target.dataset.type === ELEMENT_TYPES.CELL
 
 export const toPixels = pixels => `${pixels}px`
 
@@ -17,15 +19,6 @@ export const getMatrix = (current, target) => {
         rows.forEach(row => acc.push(`${row}:${col}`))
         return acc
     }, [])
-}
-
-export const KEYS = {
-    ENTER: 'Enter',
-    TAB: 'Tab',
-    ARROW_LEFT: 'ArrowLeft',
-    ARROW_RIGHT: 'ArrowRight',
-    ARROW_DOWN: 'ArrowDown',
-    ARROW_UP: 'ArrowUp'
 }
 
 export const getNextSelector = (key, {col, row}) => {
@@ -50,3 +43,5 @@ export const getNextSelector = (key, {col, row}) => {
 
     return `[data-id="${row}:${col}"]`
 }
+
+export const getCharFromCode = code => String.fromCharCode(code)

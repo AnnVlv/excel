@@ -1,5 +1,5 @@
-import {ExcelComponent} from '@core/ExcelComponent'
-import {$} from '@core/DOM'
+import {ExcelComponent, $} from '@core'
+
 
 export class Formula extends ExcelComponent {
     static className = 'excel__formula'
@@ -8,7 +8,8 @@ export class Formula extends ExcelComponent {
         super($root, {
             ...options,
             name: 'Formula',
-            listeners: ['input', 'keydown']
+            listeners: ['input', 'keydown'],
+            stateFieldsToSubscribe: ['cellText']
         })
     }
 
@@ -16,10 +17,10 @@ export class Formula extends ExcelComponent {
         super.init()
 
         this.$input = this.$root.find('#formula-input')
-        const setText = $cell => this.$input.text($cell.text())
+        this.$input.text(this.state.cellState['0:0'] ? this.state.cellState['0:0'].text : '')
 
-        this.on('table:select', $cell => setText($cell))
-        this.on('table:input', $cell => setText($cell))
+        // this.on('table:select', $cell => this.$input.text($cell.text()))
+        this.on('table:select', $cell => this.$input.text($cell.dataset('value')))
     }
 
     toHTML() {
@@ -27,6 +28,10 @@ export class Formula extends ExcelComponent {
           <div class="info">fx</div>
           <div class="input" id="formula-input" contenteditable spellcheck="false"></div>
         `
+    }
+
+    onStateChange(changes) {
+        this.$input.text(changes.cellText)
     }
 
     onInput(event) {

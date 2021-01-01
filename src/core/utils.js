@@ -14,6 +14,29 @@ export const range = (start, end) => {
         .map((_, i) => start + i)
 }
 
+export const camelCaseToDash = str => {
+    return str.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`)
+}
+
+export const debounce = (callback, milliseconds) => {
+    let timeout
+    return (...args) => {
+        const later = () => {
+            clearTimeout(timeout)
+            callback(...args)
+        }
+        clearTimeout(timeout)
+        timeout = setTimeout(later, milliseconds)
+    }
+}
+
+export const storage = (key, value) => {
+    if (!value) {
+        return JSON.parse(localStorage.getItem(key))
+    }
+    localStorage.setItem(key, JSON.stringify(value))
+}
+
 Object.prototype.hasValue = function(value) {
     let hasValue = false
     Object.keys(this).forEach(key => {

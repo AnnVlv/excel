@@ -14,7 +14,8 @@
     "comma-dangle": "off",
     "max-len": ["error", 130],
     "no-unused-vars": "off",
-    "no-extend-native": "off"
+    "no-extend-native": "off",
+    "no-case-declarations": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }

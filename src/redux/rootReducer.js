@@ -1,4 +1,4 @@
-import {STYLES_CHANGE, TABLE_RESIZE, TABLE_TITLE_CHANGE, TEXT_CHANGE} from '@/redux/types'
+import {OPEN_DATE_CHANGE, STYLES_CHANGE, TABLE_RESIZE, TABLE_TITLE_CHANGE, TEXT_CHANGE} from '@/redux/types'
 import {RESIZE_TYPES} from '@/components/table/types'
 
 
@@ -48,12 +48,16 @@ export const rootReducer = function(state, action) {
         })
         return newState
     }
-    case TABLE_TITLE_CHANGE: {
+    case TABLE_TITLE_CHANGE:
         return {
             ...state,
             tableTitle: action.payload.title
         }
-    }
+    case OPEN_DATE_CHANGE:
+        return {
+            ...state,
+            openDate: new Date().toJSON()
+        }
     default:
         return state
     }

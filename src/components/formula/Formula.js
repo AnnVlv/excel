@@ -19,7 +19,6 @@ export class Formula extends ExcelComponent {
         this.$input = this.$root.find('#formula-input')
         this.$input.text(this.state.cellState['0:0'] ? this.state.cellState['0:0'].text : '')
 
-        // this.on('table:select', $cell => this.$input.text($cell.text()))
         this.on('table:select', $cell => this.$input.text($cell.dataset('value')))
     }
 

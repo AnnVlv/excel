@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve",
-    "build": "cross-env NODE_END=production webpack --mode production"
+    "build": "cross-env NODE_END=production webpack --mode production",
+    "lint": "npx eslint ./src"
   },
   "author": "",
   "license": "ISC",

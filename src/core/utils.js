@@ -1,3 +1,5 @@
+export const STORAGE_KEY_PATTERN = 'excel:'
+
 export const capitalize = str => {
     return typeof str === 'string' ?
         `${str[0].toUpperCase()}${str.substr(1)}` :
@@ -35,6 +37,14 @@ export const storage = (key, value) => {
         return JSON.parse(localStorage.getItem(key))
     }
     localStorage.setItem(key, JSON.stringify(value))
+}
+
+export const getStorageKey = id => {
+    return `${STORAGE_KEY_PATTERN}${id}`
+}
+
+export const getIdFromStorageKey = key => {
+    return key.slice(STORAGE_KEY_PATTERN.length)
 }
 
 Object.prototype.hasValue = function(value) {

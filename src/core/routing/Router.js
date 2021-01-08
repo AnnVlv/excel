@@ -1,5 +1,4 @@
-import {$} from '@core'
-import {ActiveRoute} from '@core/routing/ActiveRoute'
+import {$, ActiveRoute} from '@core'
 
 
 export class Router {

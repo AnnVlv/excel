@@ -1,4 +1,4 @@
-import {DOMListener} from '@core/DOMListener'
+import {DOMListener} from '@core'
 
 
 export class ExcelComponent extends DOMListener {

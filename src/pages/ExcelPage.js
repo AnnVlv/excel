@@ -1,5 +1,4 @@
-import {debounce, getStorageKey, storage, createStore, Page} from '@core'
-import {ActiveRoute} from '@core/routing'
+import {debounce, getStorageKey, storage, createStore, Page, ActiveRoute} from '@core'
 import {Excel} from '@/components/excel/Excel'
 import {Header} from '@/components/header/Header'
 import {Toolbar} from '@/components/toolbar/Toolbar'
@@ -30,7 +29,7 @@ export class ExcelPage extends Page {
             storage(storageKey, state)
         }, 500)
 
-        store.subscribe(storeSubscriber)
+        this.subscriber = store.subscribe(storeSubscriber)
 
         this.excel = new Excel({
             components: [Header, Toolbar, Formula, Table],
@@ -47,6 +46,7 @@ export class ExcelPage extends Page {
     }
 
     destroy() {
+        this.subscriber.unsubscribe()
         this.excel.destroy()
     }
 }

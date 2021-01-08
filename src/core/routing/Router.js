@@ -21,8 +21,7 @@ export class Router {
         this.onPageChange()
     }
 
-    onPageChange() {
-        this.$selector.clear()
+    async onPageChange() {
         this.page ? this.page.destroy() : null
 
         const path = ActiveRoute.path
@@ -31,7 +30,7 @@ export class Router {
         const Page = this.routes[routeName].pageClass
 
         this.page = new Page(ActiveRoute.param)
-        this.$selector.append(this.page.getRoot())
+        this.$selector.clear().append(await this.page.getRoot())
         this.page.afterRender()
     }
 

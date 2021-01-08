@@ -1,24 +1,25 @@
-import {$, storage, Page, getIdFromStorageKey, STORAGE_KEY_PATTERN} from '@core'
+import {$, Page, getIdFromStorageKey, STORAGE_KEY_PATTERN} from '@core'
+import {LocalStorageClient} from '@/shared'
 import {createDashboard} from '@/pages/dashboard.template'
 
 
 export class DashboardPage extends Page {
-    getRoot() {
+    async getRoot() {
         const $root = $.create('div', ['db'])
-        $root.html(createDashboard(this.getItems()))
+        $root.html(createDashboard(await this.getItems()))
         return $root
     }
 
-    getItems() {
+    async getItems() {
         const items = []
-        Object.keys(localStorage).forEach(key => {
+        for (const key of Object.keys(localStorage)) {
             if (key.startsWith(STORAGE_KEY_PATTERN)) {
                 items.push({
-                    state: storage(key),
+                    state: await new LocalStorageClient(key).get(key),
                     id: getIdFromStorageKey(key)
                 })
             }
-        })
+        }
         return items
     }
 }

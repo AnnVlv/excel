@@ -1,4 +1,5 @@
-import {debounce, getStorageKey, storage, createStore, Page, ActiveRoute} from '@core'
+import {getStorageKey, createStore, Page, ActiveRoute, StateProcessor} from '@core'
+import {LocalStorageClient} from '@/shared'
 import {Excel} from '@/components/excel/Excel'
 import {Header} from '@/components/header/Header'
 import {Toolbar} from '@/components/toolbar/Toolbar'
@@ -16,28 +17,27 @@ export class ExcelPage extends Page {
             ActiveRoute.changeHash('')
             return
         }
+        this.tableId = tableId
+    }
 
-        const storageKey = getStorageKey(tableId)
-        const tableData = storage(storageKey)
-        if (!tableData) {
-            storage(storageKey, defaultState)
+    async getRoot() {
+        const stateProcessor = new StateProcessor(
+            new LocalStorageClient(getStorageKey(this.tableId))
+        )
+
+        const state = await stateProcessor.get()
+        if (!state) {
+            await stateProcessor.listen(defaultState)
         }
 
-        const store = createStore(rootReducer, tableData || defaultState)
-
-        const storeSubscriber = debounce(state => {
-            storage(storageKey, state)
-        }, 500)
-
-        this.subscriber = store.subscribe(storeSubscriber)
+        const store = createStore(rootReducer, state || defaultState)
+        this.subscriber = store.subscribe(stateProcessor.listen)
 
         this.excel = new Excel({
             components: [Header, Toolbar, Formula, Table],
             store
         })
-    }
 
-    getRoot() {
         return this.excel.getRoot()
     }
 

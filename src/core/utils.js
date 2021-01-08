@@ -22,7 +22,7 @@ export const camelCaseToDash = str => {
 
 export const debounce = (callback, milliseconds) => {
     let timeout
-    return (...args) => {
+    return async (...args) => {
         const later = () => {
             clearTimeout(timeout)
             callback(...args)
@@ -30,13 +30,6 @@ export const debounce = (callback, milliseconds) => {
         clearTimeout(timeout)
         timeout = setTimeout(later, milliseconds)
     }
-}
-
-export const storage = (key, value) => {
-    if (!value) {
-        return JSON.parse(localStorage.getItem(key))
-    }
-    localStorage.setItem(key, JSON.stringify(value))
 }
 
 export const getStorageKey = id => {
